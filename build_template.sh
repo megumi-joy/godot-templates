@@ -18,6 +18,8 @@ export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/$NDK
 SRC=/w/godot-$TAG
 [ -d $SRC ] || git clone -q --depth 1 --branch $TAG https://github.com/godotengine/godot.git $SRC
 cd $SRC
+# 4.5+ refuses to build without Swappy frame pacing (script downloads the prebuilt lib).
+[ -f misc/scripts/install_swappy_android.py ] && python3 misc/scripts/install_swappy_android.py 2>&1 | tail -2
 OPTS="platform=android target=template_release arch=arm64 production=yes optimize=size lto=thin deprecated=no \
   vulkan=$VULKAN opengl3=yes \
   module_mono_enabled=no module_openxr_enabled=no module_webxr_enabled=no module_mobile_vr_enabled=no \
